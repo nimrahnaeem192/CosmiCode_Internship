@@ -1,0 +1,74 @@
+
+#  Task 1: Write a Python program to print "Hello, World!" and a
+#  brief introduction about yourself.
+
+print("Hello, World!")
+print("Myself Nimra Naeem, I am a BSCS student and looking forward to grow in the world of AI" )
+
+
+#  Task 2: Create a program to perform advanced arithmetic
+#  operations (power, modulo) using functions.
+
+def power(x,y):
+    return x ** y
+
+def modulo(x,y):
+    return x % y
+
+x = int(input("Enter First number: "))
+y = int(input("Enter second number: "))
+
+print("Power of 2 numbers is: ", power(x,y))
+print("Modulo of 2 numbers is: ", modulo(x,y))
+
+
+#  Task 3: Write a program that takes user input for three numbers
+#  and prints the largest and smallest among them.
+
+lst = list(map(int, input("Enter 5 numbers separated by space: ").split()))
+
+max_num = max(lst)
+min_num = min(lst)
+
+print("The largest number is: ", max_num)
+print("The smallest number is: ", min_num)
+
+
+#  Task 4: Implement a program to calculate the area of complex
+#  shapes like a trapezoid or an ellipse.
+
+
+import math
+
+shape = input("Enter the shape (trapezoid, ellipse): ").lower()
+
+def area_of_shape(shape):
+    if shape == "trapezoid":
+        base1 = float(input("Enter the Base 1 of Trapezoid: "))
+        base2 = float(input("Enter the Base 2 of Trapezoid: "))
+        height = float(input("Enter the Height of Trapezoid: "))
+        return ((base1 + base2)  * height / 2)
+    
+    elif shape == "ellipse":
+        a = float(input("Enter first semi-major axis: "))
+        b = float(input("Enter second semi-minor axis: "))
+        return math.pi * a * b
+
+print("Area of the shape is: ", area_of_shape(shape))
+
+
+# Task 5: Create a program that converts a given time in seconds
+#  to hours, minutes, and seconds.
+
+def time_convert(time_in_seconds):
+    h = time_in_seconds // 3600
+    m = (time_in_seconds % 3600) // 60
+    s = time_in_seconds % 60
+    return h,m,s
+
+time_in_seconds = int(input("Enter time in seconds: "))
+hours, minutes, seconds = time_convert(time_in_seconds)
+print(f"Time is: {hours} Hours, {minutes} Minutes, {seconds} Seconds")
+
+
+
