@@ -1,0 +1,98 @@
+#  Task 1: Write a program to sort a list of integers using merge
+#  sort.
+
+arr = list(map(int, input("Enter the list of integers: ").split()))
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left_half = merge_sort(arr[:mid])
+    right_half = merge_sort(arr[mid:])
+    
+    return merge(left_half, right_half)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+     
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            result.append(left[i])
+            i += 1
+        
+        else:
+            result.append(right[j])
+            j += 1
+            
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+
+print("Sorted list: ",merge_sort(arr))
+
+
+
+#  Task 2: Create a program that reverses a list without using built
+# in functions and prints both the original and reversed lists.
+
+def reverse_list(lst):
+    reverse_lst = []
+    for i in range(len(lst) -1, -1, -1):
+        reverse_lst.append(lst[i])
+    return reverse_lst
+
+lst = list(map(int, input("Enter a list of numbers: ").split()))
+
+print("Original List: ", lst)
+print("Reversed List: ", reverse_list(lst))
+
+
+
+#  Task 3: Write a program to find the longest word in a sentence
+#  provided by the user, ignoring punctuation.import string
+import string
+
+sentence = input("Enter a sentence: ")
+
+for punc in string.punctuation:
+    sentence = sentence.replace(punc, "")
+
+words = sentence.split()
+longest = max(words, key=len)
+print("Longest word:", longest)
+
+
+
+
+
+#  Task 4: Implement a program to check if a string is a palindrome,
+#  ignoring spaces and case sensitivity.
+
+def is_palindrome(word):
+    return word == word[::-1]
+  
+    
+word = input("Enter a word to check if it is palindrome or not: ")
+print(f"The word {word} is a palindrome: {is_palindrome(word)}")
+
+
+
+#  Task 5: Write a program to find the most frequent word in a text
+#  file.
+def word_count(filename):
+    with open(filename, 'r') as file:
+        text = file.read()
+        
+    words = text.lower().split()
+    word_count = {}
+    
+    for word in words:
+        clean_word = word.strip(string.punctuation)
+        word_count[clean_word] = word_count.get(clean_word, 0) + 1
+        
+    most_common_word = max(word_count, key=word_count.get)
+    return most_common_word, word_count[most_common_word]
+
+word, count = word_count(r"E:\data.txt.txt")
+print(f"The most common word is '{word}' which appears {count} times.") 
