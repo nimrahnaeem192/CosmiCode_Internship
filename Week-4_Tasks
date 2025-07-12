@@ -1,0 +1,108 @@
+#  Task 1: Implement a binary search algorithm to find the position
+#  of a target value within a sorted list.
+
+list_for_search = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+print("List for search:", list_for_search)
+search_num = int(input("Enter a number to search in the list: "))
+
+start_index = 0
+end_index = len(list_for_search) - 1
+found = False
+
+while start_index <= end_index:
+    mid_index = (start_index + end_index) // 2
+    if list_for_search[mid_index] == search_num:
+        found = True
+        print(f"Number {search_num} found at index {mid_index}.")
+        break
+    elif list_for_search[mid_index] < search_num:
+        start_index = mid_index + 1 
+    elif list_for_search[mid_index] > search_num:
+        end_index = mid_index - 1
+if not found:
+        print("Number not found in the list.")
+        
+
+#  Task 2: Write a program to perform matrix multiplication for two
+#  given matrices.
+
+first_matrix = [
+    [1, 2],
+    [3, 4]
+]
+
+second_matrix = [
+    [5, 6],
+    [7, 8]
+]
+
+result = [
+    [0, 0],
+    [0, 0]
+]   
+
+for i in range(len(first_matrix)):
+    for j in range(len(second_matrix[0])):
+        for k in range(len(second_matrix)):
+            result[i][j] += first_matrix[i][k] * second_matrix[k][j]
+
+print("Result of matrix multiplication:")
+for row in result:    
+    print(row)
+
+
+#  Task 3: Create a program to solve the Tower of Hanoi problem
+#  recursively.
+def tower_of_hanaoi(n, source, helper, destination):
+    if n == 1:
+        print(f"Move Disk 1 from {source} to {destination}")
+    else:
+        tower_of_hanaoi(n - 1, source, destination, helper)
+        print(f"Move Disk {n} from {source} to {destination}")
+        tower_of_hanaoi(n - 1, helper, source, destination)
+        
+tower_of_hanaoi(4, 'A', 'B', 'C')   
+
+#  Task 4: Implement a program that uses a dictionary to count the
+#  frequency of each character in a string.
+
+str = input("Enter a string: ")
+char_count = {}
+
+for char in str:
+    if char in char_count:
+        char_count[char] += 1
+    else:
+        char_count[char] = 1
+
+print("Character Frequency: ")
+for char, count in char_count.items():
+    print(f" {char} , {count}")
+
+# Task 5: Write a program to find the shortest path in a graph
+#  using Dijkstra's algorithm.
+
+dj =  {
+    'A' : {'B': 1, 'C': 4},
+    'B' : {'C': 4,},
+    'C' : {}
+}
+
+shortest_path = { 'A' : 0, 'B': float('inf'), 'C': float('inf') }
+unvisited = { 'A', 'B', 'C' }
+
+while unvisited:
+    current_node = min(unvisited, key=lambda node: shortest_path[node])
+    unvisited.remove(current_node)
+    
+    print(f"Visiting node: {current_node}")
+    
+    for neighbor, weight in dj[current_node].items():
+        new_distance = shortest_path[current_node] + weight
+        
+        if new_distance < shortest_path[neighbor]:
+            shortest_path[neighbor] = new_distance
+            print(f"Updating distance for {neighbor} to {new_distance}")
+print("\n Final shortest path starts from node A: ")
+for node, distance in shortest_path.items():
+    print(f"Distance to {node}: {distance}")
