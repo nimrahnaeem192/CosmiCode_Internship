@@ -1,0 +1,321 @@
+#  Task 1: Define a class for a bank account with attributes for
+#  account number, balance, and owner name. Include methods for
+#  deposit, withdrawal, and transfer.
+
+class BankAccount:
+    def __init__(self, account_number, owner_name, balance=0):
+        self.account_number = account_number
+        self.owner_name = owner_name
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+        print(f"Deposited Rs.{amount}")
+
+    def withdraw(self, amount):
+        if amount > self.balance:
+            print("Insufficient balance!")
+        else:
+            self.balance -= amount
+            print(f"Withdrawn Rs.{amount}")
+
+    def transfer(self, receiver_account, amount):
+        if amount > self.balance:
+            print("Transfer failed! Not enough balance.")
+        else:
+            self.balance -= amount
+            receiver_account.balance += amount
+            print(f"Transferred Rs.{amount} to {receiver_account.owner_name}.")
+            print(f"Your remaining balance: Rs.{self.balance}")
+
+
+user_account = BankAccount("12345", "Nimra", 1000)
+receiver_account = BankAccount("67890", "Sana", 500)
+
+print("Welcome!")
+while True:
+    
+    print("1. Check Balance")
+    print("2. Deposit Money")
+    print("3. Withdraw Money")
+    print("4. Transfer Money")
+    print("5. Exit")
+
+    choice = input("Enter your choice (1-5): ")
+
+    if choice == "1":
+        print(f"Current balance: Rs.{user_account.balance}")
+
+    elif choice == "2":
+        amount = int(input("Enter amount to deposit: Rs."))
+        user_account.deposit(amount)
+
+    elif choice == "3":
+        amount = int(input("Enter amount to withdraw: Rs."))
+        user_account.withdraw(amount)
+
+    elif choice == "4":
+        amount = int(input("Enter amount to transfer to Sana: Rs."))
+        user_account.transfer(receiver_account, amount)
+
+    elif choice == "5":
+        print("Thank you for using our banking system!")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
+
+
+#  Task 2: Implement a class hierarchy to represent geometric
+#  shapes (e.g., Circle, Rectangle, Triangle) with methods to
+#  calculate area and perimeter.
+
+import math
+
+
+class Shape:
+    def area(self):
+        pass
+
+    def perimeter(self):
+        pass
+
+# Circle class
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return math.pi * self.radius ** 2
+
+    def perimeter(self):
+        return 2 * math.pi * self.radius
+
+# Rectangle class
+class Rectangle(Shape):
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    def area(self):
+        return self.length * self.width
+
+    def perimeter(self):
+        return 2 * (self.length + self.width)
+
+# Triangle class
+class Triangle(Shape):
+    def __init__(self, side1, side2, side3):
+        self.a = side1
+        self.b = side2
+        self.c = side3
+
+    def area(self):
+        s = (self.a + self.b + self.c) / 2  # semi-perimeter
+        return math.sqrt(s * (s - self.a) * (s - self.b) * (s - self.c))
+
+    def perimeter(self):
+        return self.a + self.b + self.c
+    
+    
+print("Shape Calculator")
+while True:
+    
+    print("1. Circle")
+    print("2. Rectangle")
+    print("3. Triangle")
+    print("4. Exit")
+
+    choice = input("Choose a shape (1-4): ")
+
+    if choice == "1":
+        radius = float(input("Enter radius of the circle: "))
+        c = Circle(radius)
+        print(f"Area: {c.area():.2f}")
+        print(f"Perimeter: {c.perimeter():.2f}")
+
+    elif choice == "2":
+        length = float(input("Enter length of the rectangle: "))
+        width = float(input("Enter width of the rectangle: "))
+        r = Rectangle(length, width)
+        print(f"Area: {r.area():.2f}")
+        print(f"Perimeter: {r.perimeter():.2f}")
+
+    elif choice == "3":
+        side1 = float(input("Enter side 1 of the triangle: "))
+        side2 = float(input("Enter side 2 of the triangle: "))
+        side3 = float(input("Enter side 3 of the triangle: "))
+        t = Triangle(side1, side2, side3)
+        print(f"Area: {t.area():.2f}")
+        print(f"Perimeter: {t.perimeter():.2f}")
+
+    elif choice == "4":
+        print("Goodbye!")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
+
+
+#  Task 3: Create a program to demonstrate the concept of
+#  inheritance by creating a base class for a vehicle and derived
+#  classes for car and bike.
+
+class Vehicle:
+    def __init__(self, brand, wheels):
+        self.brand = brand
+        self.wheels = wheels
+
+    def display_info(self):
+        print(f"Brand: {self.brand}, Wheels: {self.wheels}")
+
+class Car(Vehicle):
+    def __init__(self, brand):
+        super().__init__(brand, 4)
+
+class Bike(Vehicle):
+    def __init__(self, brand):
+        super().__init__(brand, 2)
+
+
+car = Car("Toyota")
+bike = Bike("Honda")
+
+car.display_info()
+bike.display_info()
+
+
+print("\n")
+#  Task 4: Write a program to implement operator overloading for
+#  complex number arithmetic.
+
+class ComplexNumber:
+    def __init__(self, real, imag):
+        self.real = real
+        self.imag = imag
+
+    def __add__(self, other):
+        return ComplexNumber(self.real + other.real, self.imag + other.imag)
+
+    def __str__(self):
+        return f"{self.real} + {self.imag}i"
+
+c1 = ComplexNumber(3, 2)
+c2 = ComplexNumber(1, 7)
+result = c1 + c2
+print("Sum of complex numbers:", result)
+
+
+print("\n")
+#  Task 5: Implement a program that demonstrates polymorphism
+#  by creating a base class and derived classes with overridden
+#  methods.
+
+class Animal:
+    def speak(self):
+        print("Animal speaks")
+
+class Dog(Animal):
+    def speak(self):
+        print("Dog barks")
+
+class Cat(Animal):
+    def speak(self):
+        print("Cat meows")
+
+
+animals = [Dog(), Cat(), Animal()]
+for a in animals:
+    a.speak()  
+
+
+
+
+#  Task 6: Create a program to manage a library system using
+#  classes, including methods for adding, removing, and displaying
+#  books.
+
+class Library:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, book):
+        self.books.append(book)
+        print(f'"{book}" added to the library.')
+
+    def remove_book(self, book):
+        if book in self.books:
+            self.books.remove(book)
+            print(f'"{book}" removed from the library.')
+        else:
+            print(f'"{book}" not found in the library.')
+
+    def display_books(self):
+        if not self.books:
+            print("Library is empty.")
+        else:
+            print("Books in library:")
+            for book in self.books:
+                print(f"- {book}")
+
+lib = Library()
+
+print("Library Menu")
+while True:
+   
+    print("1. Add Book")
+    print("2. Remove Book")
+    print("3. Display Books")
+    print("4. Exit")
+
+    choice = input("Enter your choice (1-4): ")
+
+    if choice == "1":
+        book = input("Enter book name to add: ")
+        lib.add_book(book)
+
+    elif choice == "2":
+        book = input("Enter book name to remove: ")
+        lib.remove_book(book)
+
+    elif choice == "3":
+        lib.display_books()
+
+    elif choice == "4":
+        print("Exiting Library System.")
+        break
+
+    else:
+        print("Invalid choice. Try again.")
+
+
+#  Task 7: Implement a class to handle basic file operations
+#  (reading, writing, appending) for text files.
+
+class FileManager:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def write_file(self, text):
+        with open(self.filename, 'w') as f:
+            f.write(text)
+        print("File written successfully.")
+
+    def append_file(self, text):
+        with open(self.filename, 'a') as f:
+            f.write(text)
+        print("Text appended to file.")
+
+    def read_file(self):
+        try:
+            with open(self.filename, 'r') as f:
+                content = f.read()
+                print("File content:")
+                print(content)
+        except FileNotFoundError:
+            print("File not found!")
+
+fm = FileManager("myfile.txt")
+fm.write_file("Hello, this is Nimra.\n")
+fm.append_file("Welcome to file handling in Python.\n")
+fm.read_file()
