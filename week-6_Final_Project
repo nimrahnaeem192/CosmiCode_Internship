@@ -1,0 +1,94 @@
+import json
+import threading
+import asyncio
+import time
+from collections import Counter, defaultdict, namedtuple
+import matplotlib.pyplot as plt
+
+#  Decorator to measure execution time
+def time_it(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"\n[INFO] Execution time: {end - start:.2f} seconds")
+        return result
+    return wrapper
+
+
+# Step 1: Data Input (Sample or user-defined)
+# Simulating input as list of sales records
+sales_data = [
+    {"region": "North", "sales": 150},
+    {"region": "South", "sales": 200},
+    {"region": "East", "sales": 130},
+    {"region": "West", "sales": 160},
+    {"region": "North", "sales": 180},
+    {"region": "East", "sales": 120},
+    {"region": "South", "sales": 210},
+]
+
+
+# Step 2: Data Processing (with collections + exception handling)
+@time_it
+def process_sales(data):
+    try:
+        region_sales = defaultdict(int)
+
+        for record in data:
+            region_sales[record["region"]] += record["sales"]
+
+        print("\n[INFO] Total sales by region:")
+        for region, total in region_sales.items():
+            print(f"{region}: {total}")
+
+        return region_sales
+    except Exception as e:
+        print(f"[ERROR] Failed to process data: {e}")
+        return {}
+
+# Step 3: Visualization with matplotlib
+def visualize_sales(region_sales):
+    regions = list(region_sales.keys())
+    totals = list(region_sales.values())
+
+    plt.bar(regions, totals, color='skyblue')
+    plt.title("Sales by Region")
+    plt.xlabel("Region")
+    plt.ylabel("Total Sales")
+    plt.grid(axis='y')
+    plt.show()
+
+# Step 4: Export to JSON
+def export_to_json(data, filename="sales_summary.json"):
+    try:
+        with open(filename, "w") as f:
+            json.dump(data, f, indent=4)
+        print(f"\n[INFO] Data exported to {filename}")
+    except Exception as e:
+        print(f"[ERROR] Failed to export data: {e}")
+
+# Step 5: Multithreading Example (running processing + exporting)
+def threaded_export(region_sales):
+    thread = threading.Thread(target=export_to_json, args=(region_sales,))
+    thread.start()
+    thread.join()
+
+
+# Step 6: Async Task Simulation (like logging)
+async def log_data():
+    await asyncio.sleep(1)
+    print("[INFO] Async log: Data analysis complete and logged.")
+
+
+# Putting it all together
+@time_it
+def run_analysis_app():
+    region_sales = process_sales(sales_data)
+    visualize_sales(region_sales)
+    threaded_export(region_sales)
+    asyncio.run(log_data())
+
+# Run the final project
+run_analysis_app()
+
