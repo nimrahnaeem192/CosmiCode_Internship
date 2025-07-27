@@ -1,0 +1,180 @@
+import time
+
+#  Task 1: Write a program to demonstrate the use of decorators to
+#  measure the execution time of functions.
+def execution_time_decorator(func):
+    def wrapper():
+        start_time = time.time()  # Record start time
+        func()  # Call the actual function
+        end_time = time.time()  # Record end time
+        total_time = end_time - start_time  # Calculate total time
+        print(f"Execution time: {total_time:.4f} seconds")
+    return wrapper  # Return the inner function
+
+# Define a sample function and decorate it
+@execution_time_decorator
+def example_function():
+    print("Starting a time-consuming task...")
+    time.sleep(2)  # Pause the program for 2 seconds to simulate a task
+    print("Task completed!")
+
+# Call the decorated function
+example_function()
+
+
+
+#  Task 2: Implement exception handling in a program that
+#  performs complex mathematical calculations, ensuring it handles
+#  various potential errors.
+import math  
+def complex_calculation():
+    try:
+        # Taking input from user
+        x = float(input("Enter a number: "))
+
+        # Perform some complex calculations
+        result = math.sqrt(x) + (10 / x)
+        print(f"Result: {result:.2f}")
+
+    except ValueError:
+        # This handles invalid input (like text) or square root of negative numbers
+        print("Error: Please enter a valid positive number.")
+
+    except ZeroDivisionError:
+        # This handles division by zero when x = 0
+        print("Error: Division by zero is not allowed.")
+
+    except Exception as e:
+        # Catch any other unexpected error
+        print(f"An unexpected error occurred: {e}")
+
+# Run the function
+complex_calculation()
+
+
+
+#  Task 3: Create a program to read from and write to a JSON file,
+#  demonstrating JSON handling in Python.
+
+import json  # Importing the json module to handle JSON files
+
+# Step 1: Create a Python dictionary (sample data)
+data = {
+    "name": "Nimra",
+    "age": 20,
+    "skills": ["Python", "Data Analysis", "Web Development"]
+}
+
+# Step 2: Write the dictionary to a JSON file
+with open("data.json", "w") as file:
+    json.dump(data, file, indent=4)  # indent=4 makes it pretty printed
+
+print("Data has been written to data.json")
+
+# Step 3: Read the data back from the JSON file
+with open("data.json", "r") as file:
+    loaded_data = json.load(file)
+
+# Step 4: Display the loaded data
+print("\nData read from file:")
+print(loaded_data)
+
+
+
+#  Task 4: Implement a program to use the collections module to
+#  perform advanced data manipulation tasks.
+from collections import Counter, defaultdict, namedtuple
+
+# Counts frequency of each item in a list
+fruits = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple']
+fruit_count = Counter(fruits)
+
+print("Fruit Count using Counter:")
+print(fruit_count)
+print()
+
+# Groups names by departments
+employees = [('IT', 'Ali'), ('HR', 'Sara'), ('IT', 'Ahmed'), ('HR', 'Zara'), ('Sales', 'Nimra')]
+
+dept_dict = defaultdict(list)  # Default value is an empty list
+for dept, name in employees:
+    dept_dict[dept].append(name)
+
+print("Employees grouped by department using defaultdict:")
+for dept, names in dept_dict.items():
+    print(f"{dept}: {names}")
+print()
+
+# Creating a lightweight object for storing student data
+Student = namedtuple('Student', ['name', 'age', 'grade'])
+student1 = Student('Ahsan', 21, 'A')
+
+print("Student info using namedtuple:")
+print(f"Name: {student1.name}")
+print(f"Age: {student1.age}")
+print(f"Grade: {student1.grade}")
+
+
+
+#  Task 5: Write a program to demonstrate multithreading by
+#  creating and running multiple threads to perform different tasks
+#  simultaneously.
+
+import threading  
+ 
+# Task 1: Print numbers from 1 to 5 with delay
+def print_numbers():
+    for i in range(1, 6):
+        print(f"Number: {i}")
+        time.sleep(1)  # Pause for 1 second
+
+# Task 2: Print letters A to E with delay
+def print_letters():
+    for letter in ['A', 'B', 'C', 'D', 'E']:
+        print(f"Letter: {letter}")
+        time.sleep(1)  # Pause for 1 second
+
+# Create threads for each task
+thread1 = threading.Thread(target=print_numbers)
+thread2 = threading.Thread(target=print_letters)
+
+# Start both threads
+thread1.start()
+thread2.start()
+
+# Wait for both threads to finish
+thread1.join()
+thread2.join()
+
+print("Both threads have finished execution.")
+
+
+
+#  Task 6: Create a program to use Python's asyncio library to
+#  perform asynchronous I/O operations.
+
+import asyncio  # Import the asyncio library
+# Define an asynchronous function to simulate a download
+async def download_file(file_name, seconds):
+    print(f"Start downloading {file_name}...")
+    await asyncio.sleep(seconds)  # Simulates delay (I/O operation)
+    print(f"Finished downloading {file_name} in {seconds} seconds")
+
+# Main function to run multiple downloads asynchronously
+async def main():
+    # Start all downloads at the same time
+    await asyncio.gather(
+        download_file("file1.txt", 2),
+        download_file("file2.txt", 3),
+        download_file("file3.txt", 1)
+    )
+
+# Run the async main function
+start_time = time.time()
+asyncio.run(main())  # Starts the async event loop
+end_time = time.time()
+
+print(f"\nAll downloads completed in {end_time - start_time:.2f} seconds.")
+
+
+
